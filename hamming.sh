@@ -20,24 +20,24 @@
 
 # The Hamming distance is only defined for sequences of equal length, so an attempt to calculate it between sequences of different lengths should not work.
 #!/bin/bash
-error()
-{
-    printf '%s\n' $*
-    exit 1
+error () {
+  printf '%s\n' "$*"
+  exit 1
 }
 main () {
-    (( $# == 2 )) || error "Usage: hamming.sh <string1> <string2>"
+  (( $# == 2 )) || error 'Usage: hamming.sh <string1> <string2>'
 
-    string1=$1
-    string2=$2
-    (( ${#string1} == ${#string2} )) || error "left and right strands must be of equal length"
+  a=$1 b=$2 
+  (( ${#a} == ${#b} )) || error 'left and right strands must be of equal length'
 
-    count=0
-    for ((i=0;i<${#string1};i++))
-    do
-       [[ ${string1:$i:1} == ${string2:$i:1} ]] || count=$((count+1))
-    done
-    echo $count
+  declare -i count
+  for (( i = 0; i < ${#a}; i++ )); do
+
+    [[ ${a:i:1} == "${b:i:1}" ]] || count+=1
+
+  done
+
+  printf '%d\n' "$count"
 }
 
 main "$@"
